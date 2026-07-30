@@ -1,6 +1,6 @@
 /* ======= CONFIG ======= */
 /* رابط Google Apps Script Web App (الذي زودتِني به) */
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw0vIXsdm1gbLYTRRmf3E87cjtMy7bXWwnjwgIxdhAEn53UzXphrkxvQPYPINYjwOcjig/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7J4SpqX_bTOq_M9OZNSVBHZNSC-34nXOEW5Wu8xD7/dev";
 
 /* كلمة سر لوحة الإدارة */
 const ADMIN_PASSWORD = "sara2007";
