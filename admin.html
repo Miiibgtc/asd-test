@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>لوحة إدارة النتائج</title>
+  <style>body{font-family:Arial,Helvetica,sans-serif;padding:12px} table{border-collapse:collapse;width:100%} th,td{border:1px solid #ddd;padding:6px} #login{max-width:380px}</style>
+</head>
+<body>
+  <h1>لوحة إدارة النتائج</h1>
+  <div id="login">
+    <label>أدخل كلمة السر:</label>
+    <input id="pw" type="password" />
+    <button id="ok">دخول</button>
+  </div>
+  <div id="content" style="display:none">
+    <button id="download">تنزيل CSV</button>
+    <table id="resultsTable"><thead><tr><th>الوقت</th><th>الاسم</th><th>العمر</th><th>الهاتف</th><th>النسبة</th><th>تفاصيل</th></tr></thead><tbody></tbody></table>
+  </div>
+
+  <script>
+    const ADMIN_PW = "sara2007";
+    const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbw0vIXsdm1gbLYTRRmf3E87cjtMy7bXWwnjwgIxdhAEn53UzXphrkxvQPYPINYjwOcjig/exec?action=admin";
+
+    document.getElementById("ok").addEventListener("click", async ()=>{
+      const pw = document.getElementById("pw").value;
+      if (pw !== ADMIN_PW){ alert("كلمة السر خاطئة"); return; }
+      try {
+        const res = await fetch(WEBAPP_URL + "&password=" + encodeURIComponent(pw));
+        if (!res.ok) throw new Error("خطأ في جلب النتائج");
+        const data = await res.json();
+        const tbody = document.querySelector("#resultsTable tbody"); tbody.innerHTML = "";
+        data.forEach(r=>{
+          const tr = document.createElement("tr");
+          tr.innerHTML = `<td>${r.timestamp}</td><td>${r.name}</td><td>${r.age}</td><td>${r.phone}</td><td>${r.percentage}%</td><td><pre>${JSON.stringify(r.answers)}</pre></td>`;
+          tbody.appendChild(tr);
+        });
+        document.getElementById("login").style.display="none";
+        document.getElementById("content").style.display="block";
+        document.getElementById("download").onclick = ()=>{
+          let csv = "Timestamp,Name,Age,Phone,Percentage,Answers\n";
+          data.forEach(r=>{
+            csv += `"${r.timestamp}","${r.name}",${r.age},"${r.phone}",${r.percentage},"${JSON.stringify(r.answers).replace(/"/g,'""')}"\n`;
+          });
+          const a = document.createElement("a");
+          a.href = URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8;"}));
+          a.download = "results.csv"; a.click();
+        };
+      } catch (e){ alert("تعذّر جلب البيانات: "+e.message) }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>اختبار احتمال طيف التوحد</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header><h1>اختبار احتمال طيف التوحد</h1></header>
+
+  <main>
+    <section id="intro">
+      <p>قبل البدء، الرجاء ملء المعلومات التالية والموافقة على حفظ البيانات للمتابعة.</p>
+      <form id="preForm">
+        <label>الاسم:<input type="text" id="name" required></label>
+        <label>العمر:<input type="number" id="age" required min="1"></label>
+        <label>رقم الهاتف:<input type="tel" id="phone" required></label>
+        <label class="consent"><input type="checkbox" id="consent" required> أوافق على حفظ بياناتي لاستخدامها في الإشعارات والمتابعة.</label>
+        <button type="submit">ابدأ الاختبار</button>
+      </form>
+    </section>
+
+    <section id="quiz" class="hidden">
+      <h2>الأسئلة</h2>
+      <form id="quizForm"></form>
+      <div class="quiz-actions">
+        <button id="submitQuiz">إرسال الإجابات</button>
+        <button id="backBtn" type="button">العودة لتعديل البيانات</button>
+      </div>
+    </section>
+
+    <section id="result" class="hidden">
+      <h2>النتيجة</h2>
+      <p id="resultText"></p>
+      <button id="homeBtn">العودة للصفحة الرئيسية</button>
+    </section>
+  </main>
+
+  <footer><small>تم تصميم الاختبار لأغراض أولية فقط ولا يمثل تشخيصاً طبياً.</small></footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
